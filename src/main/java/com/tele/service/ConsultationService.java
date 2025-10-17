@@ -1,8 +1,6 @@
 package com.tele.service;
 
 import com.tele.dto.ConsultationDTO;
-import com.tele.model.Consultation;
-import com.tele.model.MedicalProcedure;
 import com.tele.model.enums.ConsultationStatus;
 
 import java.time.LocalDateTime;
@@ -34,4 +32,6 @@ public interface ConsultationService {
 
 
     List<ConsultationDTO> findByDateRange(LocalDateTime startDate, LocalDateTime endDate);
+
+    long count();
 }

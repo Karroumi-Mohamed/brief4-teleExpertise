@@ -10,7 +10,7 @@ import com.tele.model.enums.UserRole;
 @DiscriminatorValue("GENERAL_PRACTITIONER")
 public class GeneralPractitioner extends User {
 
-    @Column(name = "consultation_fee", nullable = false)
+    @Column(name = "consultation_fee")
     private Double consultationFee = 150.0;
 
 

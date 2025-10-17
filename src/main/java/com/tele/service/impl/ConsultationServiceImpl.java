@@ -110,10 +110,8 @@ public class ConsultationServiceImpl implements ConsultationService {
 
         Consultation consultation = consultationOpt.get();
 
-        // US4: Stream API - Calculate total cost using map().sum()
         Double totalCost = consultation.getCost(); // Base consultation cost (150.0)
 
-        // Add medical procedures cost using Stream API
         Double proceduresCost = consultation.getMedicalProcedures()
                 .stream()
                 .mapToDouble(MedicalProcedure::getCost)
@@ -121,7 +119,7 @@ public class ConsultationServiceImpl implements ConsultationService {
 
         totalCost += proceduresCost;
 
-        // Add expertise fee if exists
+        // sdd expertise fee if exists
         if (consultation.getExpertiseRequest() != null &&
             consultation.getExpertiseRequest().getSpecialist() != null) {
             totalCost += consultation.getExpertiseRequest().getSpecialist().getExpertiseFee();
@@ -247,5 +245,10 @@ public class ConsultationServiceImpl implements ConsultationService {
                 .stream()
                 .map(DTOMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public long count(){
+        return consultationDAO.count();
     }
 }

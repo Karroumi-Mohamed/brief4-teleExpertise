@@ -8,4 +8,6 @@ public interface UserService {
     boolean verifyPassword(User user, String password);
     Optional<User> findByEmail(String email);
     Optional<User> findById(Long id);
+
+    long count();
 }

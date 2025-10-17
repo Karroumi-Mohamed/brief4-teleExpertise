@@ -22,4 +22,6 @@ public interface PatientService {
     List<PatientDTO> findByName(String name);
 
     Optional<PatientDTO> findById(Long patientId);
+
+    long count();
 }

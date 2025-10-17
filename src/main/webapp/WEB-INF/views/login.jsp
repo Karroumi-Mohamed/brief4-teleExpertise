@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,108 +6,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TeleExpertise - Login</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .login-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .login-header h1 {
-            color: #2c3e50;
-            margin-bottom: 0.5rem;
-        }
-        .login-header p {
-            color: #7f8c8d;
-            margin: 0;
-        }
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #34495e;
-            font-weight: bold;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
             box-sizing: border-box;
         }
-        .form-group input:focus {
-            outline: none;
-            border-color: #3498db;
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #fafafa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
         }
-        .btn {
+
+        .login-wrapper {
             width: 100%;
-            padding: 0.75rem;
-            background-color: #3498db;
-            color: white;
+            max-width: 420px;
+        }
+
+        .brand {
+            margin-bottom: 3.5rem;
+        }
+
+        .brand h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #111;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand p {
+            font-size: 0.938rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 2px solid #ef4444;
+            color: #dc2626;
+            padding: 0.875rem 1rem;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .form-field {
+            margin-bottom: 1.75rem;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 0.813rem;
+            font-weight: 500;
+            color: #444;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 0.875rem 0;
             border: none;
-            border-radius: 4px;
+            border-bottom: 1px solid #e5e5e5;
+            background: transparent;
             font-size: 1rem;
+            color: #111;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-field input:focus {
+            outline: none;
+            border-bottom-color: #111;
+        }
+
+        .form-field input::placeholder {
+            color: #999;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #111;
+            color: #fff;
+            border: none;
+            font-size: 0.938rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.3s;
+            margin-top: 2.5rem;
+            letter-spacing: 0.02em;
+            transition: background 0.2s ease;
         }
-        .btn:hover {
-            background-color: #2980b9;
+
+        .submit-btn:hover {
+            background: #000;
         }
-        .error {
-            background-color: #e74c3c;
-            color: white;
-            padding: 0.75rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-            text-align: center;
+
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 480px) {
+            .brand h1 {
+                font-size: 1.75rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-header">
+    <div class="login-wrapper">
+        <div class="brand">
             <h1>TeleExpertise</h1>
             <p>Medical Consultation Platform</p>
         </div>
 
-        <c:if test="${not empty error}">
-            <div class="error">
-                ${error}
+        <%
+            String error = (String) request.getAttribute("error");
+            if (error != null && !error.trim().isEmpty()) {
+        %>
+            <div class="error-message">
+                <%= error %>
             </div>
-        </c:if>
+        <% } %>
 
         <form method="post" action="${pageContext.request.contextPath}/login">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required
-                       value="${param.email}" placeholder="Enter your email">
+            <div class="form-field">
+                <label for="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    value="${param.email}"
+                    placeholder="your@email.com"
+                    autocomplete="email">
             </div>
 
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required
-                       placeholder="Enter your password">
+            <div class="form-field">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    placeholder="Enter your password"
+                    autocomplete="current-password">
             </div>
 
-            <button type="submit" class="btn">Login</button>
+            <button type="submit" class="submit-btn">Sign In</button>
         </form>
     </div>
 </body>

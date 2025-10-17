@@ -81,4 +81,9 @@ public class PatientServiceImpl implements PatientService {
         return patientDAO.findById(patientId)
                 .map(DTOMapper::toDTO);
     }
+
+    @Override
+    public long count(){
+        return patientDAO.count();
+    }
 }

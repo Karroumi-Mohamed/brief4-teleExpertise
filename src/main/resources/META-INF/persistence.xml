@@ -9,6 +9,7 @@
         
         <!-- Entity Classes -->
         <class>com.tele.model.User</class>
+        <class>com.tele.model.Admin</class>
         <class>com.tele.model.Nurse</class>
         <class>com.tele.model.GeneralPractitioner</class>
         <class>com.tele.model.Specialist</class>
@@ -16,26 +17,23 @@
         <class>com.tele.model.Consultation</class>
         <class>com.tele.model.ExpertiseRequest</class>
         <class>com.tele.model.MedicalProcedure</class>
+        <class>com.tele.model.TimeSlot</class>
         
         <properties>
             <!-- Database Connection Settings -->
-            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/telemedicine_db?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=UTC"/>
-            <property name="jakarta.persistence.jdbc.user" value="root"/>
-            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/tele_expertise"/>
+            <property name="jakarta.persistence.jdbc.user" value="mohamed"/>
+            <property name="jakarta.persistence.jdbc.password" value="12345678"/>
             
             <!-- Hibernate Settings -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             
-            <!-- Connection Pool Settings -->
-            <property name="hibernate.c3p0.min_size" value="5"/>
-            <property name="hibernate.c3p0.max_size" value="20"/>
-            <property name="hibernate.c3p0.timeout" value="300"/>
-            <property name="hibernate.c3p0.max_statements" value="50"/>
-            <property name="hibernate.c3p0.idle_test_period" value="3000"/>
+            <!-- Connection Settings -->
+            <property name="hibernate.connection.pool_size" value="10"/>
         </properties>
     </persistence-unit>
 </persistence>

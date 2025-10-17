@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDAOImpl extends GenericDAOImpl<User, Long> implements UserDAO {
-
     public UserDAOImpl() {
         super(User.class);
     }

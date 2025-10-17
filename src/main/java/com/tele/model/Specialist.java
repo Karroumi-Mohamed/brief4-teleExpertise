@@ -12,13 +12,13 @@ import com.tele.model.enums.UserRole;
 public class Specialist extends User {
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "specialty", nullable = false, length = 50)
+    @Column(name = "specialty", length = 50)
     private Specialty specialty;
 
-    @Column(name = "expertise_fee", nullable = false)
+    @Column(name = "expertise_fee")
     private Double expertiseFee;
 
-    @Column(name = "avg_consultation_duration", nullable = false)
+    @Column(name = "avg_consultation_duration")
     private Integer avgConsultationDuration = 30;
 
 

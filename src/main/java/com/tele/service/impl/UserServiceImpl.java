@@ -43,4 +43,9 @@ public class UserServiceImpl implements UserService {
         }
         return userDAO.findById(id);
     }
+
+     @Override
+    public long count(){
+        return userDAO.count();
+     }
 }

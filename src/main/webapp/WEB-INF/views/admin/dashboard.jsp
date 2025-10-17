@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.tele.model.User" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,123 +7,217 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - TeleExpertise</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #fafafa;
+            color: #111;
+        }
+
         .header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e5e5e5;
+            background: #fff;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .header h1 {
-            margin: 0;
+
+        .brand h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
-        .logout-btn {
-            background-color: #e74c3c;
-            color: white;
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            border-radius: 4px;
+
+        .user-info {
+            font-size: 0.875rem;
+            color: #666;
         }
-        .logout-btn:hover {
-            background-color: #c0392b;
-        }
+
         .container {
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            margin: 0 auto;
+            padding: 3rem 2rem;
         }
-        .dashboard-grid {
+
+        .page-title {
+            margin-bottom: 0.5rem;
+        }
+
+        .page-title h2 {
+            font-size: 2.25rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
-        .card {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
+
+        .stat-card {
+            padding: 2rem 0;
+            border-bottom: 1px solid #e5e5e5;
         }
-        .card h3 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
+
+        .stat-label {
+            font-size: 0.813rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
         }
-        .card p {
-            color: #7f8c8d;
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            color: #111;
+        }
+
+        .actions {
+            margin-top: 4rem;
+        }
+
+        .actions h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             margin-bottom: 1.5rem;
+            color: #666;
         }
-        .btn {
+
+        .action-list {
+            display: grid;
+            gap: 0;
+        }
+
+        .action-item {
+            padding: 1.25rem 0;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: #111;
+            transition: padding-left 0.2s ease;
+        }
+
+        .action-item:hover {
+            padding-left: 0.5rem;
+        }
+
+        .action-title {
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+
+        .action-arrow {
+            font-size: 1.25rem;
+            color: #999;
+        }
+
+        .logout-btn {
             display: inline-block;
             padding: 0.75rem 1.5rem;
-            background-color: #3498db;
-            color: white;
+            background: #111;
+            color: #fff;
             text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            margin-top: 3rem;
+            transition: background 0.2s ease;
         }
-        .btn:hover {
-            background-color: #2980b9;
-        }
-        .btn-success {
-            background-color: #27ae60;
-        }
-        .btn-success:hover {
-            background-color: #229954;
-        }
-        .welcome {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .welcome h2 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
-        }
-        .welcome p {
-            color: #7f8c8d;
+
+        .logout-btn:hover {
+            background: #000;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>TeleExpertise - Admin Dashboard</h1>
-        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Logout</a>
+        <div class="header-content">
+            <div class="brand">
+                <h1>TeleExpertise</h1>
+            </div>
+            <div class="user-info">
+                <%
+                    User user = (User) request.getAttribute("user");
+                    if (user != null) {
+                %>
+                    Logged in as <%= user.getFname() %> <%= user.getLname() %>
+                <% } %>
+            </div>
+        </div>
     </div>
 
     <div class="container">
-        <div class="welcome">
-            <h2>Welcome, Administrator</h2>
-            <p>Manage staff members and oversee the medical consultation platform</p>
+        <div class="page-title">
+            <h2>Dashboard</h2>
+        </div>
+        <p class="page-subtitle">System overview and quick actions</p>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Users</div>
+                <div class="stat-value"><%= request.getAttribute("totalUsers") %></div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Total Patients</div>
+                <div class="stat-value"><%= request.getAttribute("totalPatients") %></div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Consultations</div>
+                <div class="stat-value"><%= request.getAttribute("totalConsultations") %></div>
+            </div>
         </div>
 
-        <div class="dashboard-grid">
-            <div class="card">
-                <h3>Create Staff</h3>
-                <p>Add new nurses, general practitioners, and specialists to the system</p>
-                <a href="${pageContext.request.contextPath}/admin/create-staff" class="btn btn-success">Create New Staff</a>
+        <div class="actions">
+            <h3>Quick Actions</h3>
+            <div class="action-list">
+                <a href="<%= request.getContextPath() %>/admin/users" class="action-item">
+                    <span class="action-title">Manage Users</span>
+                    <span class="action-arrow">→</span>
+                </a>
+                <a href="<%= request.getContextPath() %>/admin/specialists" class="action-item">
+                    <span class="action-title">Manage Specialists</span>
+                    <span class="action-arrow">→</span>
+                </a>
+                <a href="<%= request.getContextPath() %>/admin/patients" class="action-item">
+                    <span class="action-title">View Patients</span>
+                    <span class="action-arrow">→</span>
+                </a>
+                <a href="<%= request.getContextPath() %>/admin/consultations" class="action-item">
+                    <span class="action-title">View Consultations</span>
+                    <span class="action-arrow">→</span>
+                </a>
             </div>
 
-            <div class="card">
-                <h3>View Staff</h3>
-                <p>View and manage all registered staff members in the system</p>
-                <a href="${pageContext.request.contextPath}/admin/staff-list" class="btn">View Staff List</a>
-            </div>
-
-            <div class="card">
-                <h3>System Overview</h3>
-                <p>Monitor system activity and generate reports</p>
-                <a href="#" class="btn">View Reports</a>
-            </div>
+            <a href="<%= request.getContextPath() %>/logout" class="logout-btn">Sign Out</a>
         </div>
     </div>
 </body>

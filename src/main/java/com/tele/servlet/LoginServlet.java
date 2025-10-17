@@ -30,6 +30,13 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (authService.isAuthenticated(request.getSession())) {
+            Optional<User> user = authService.user(request.getSession());
+            if (user.isPresent()) {
+                redirectToDashboard(request, response, user.get());
+                return;
+            }
+        }
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
 
@@ -48,23 +55,8 @@ public class LoginServlet extends HttpServlet {
             if (userOpt.isPresent()) {
                 User user = userOpt.get();
 
-                switch (user.getRole()) {
-                    case ADMIN:
-                        response.sendRedirect(request.getContextPath() + "/admin/dashboard");
-                        break;
-                    case NURSE:
-                        response.sendRedirect(request.getContextPath() + "/nurse/dashboard");
-                        break;
-                    case GENERAL_PRACTITIONER:
-                        response.sendRedirect(request.getContextPath() + "/gp/dashboard");
-                        break;
-                    case SPECIALIST:
-                        response.sendRedirect(request.getContextPath() + "/specialist/dashboard");
-                        break;
-                    default:
-                        request.setAttribute("error", "Unknown user role");
-                        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-                }
+                redirectToDashboard(request, response, user);
+
             } else {
                 request.setAttribute("error", "Invalid email or password");
                 request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
@@ -74,5 +66,31 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("error", "Login error occurred");
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         }
+    }
+
+
+    private void redirectToDashboard(HttpServletRequest request, HttpServletResponse response, User user) throws IOException, ServletException {
+        switch (user.getRole()) {
+            case ADMIN:
+                response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+                break;
+            case NURSE:
+                response.sendRedirect(request.getContextPath() + "/nurse/dashboard");
+                break;
+            case GENERAL_PRACTITIONER:
+                response.sendRedirect(request.getContextPath() + "/gp/dashboard");
+                break;
+            case SPECIALIST:
+                response.sendRedirect(request.getContextPath() + "/specialist/dashboard");
+                break;
+            default:
+                request.setAttribute("error", "Unknown user role");
+                request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+        }
+    }
+
+    @Override
+    public void destroy() {
+        authService = null;
     }
 }

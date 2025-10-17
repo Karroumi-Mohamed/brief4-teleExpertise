@@ -24,6 +24,7 @@ public abstract class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
     public T save(T entity) {
         EntityManager em = getEntityManager();
         EntityTransaction tx = em.getTransaction();
+        System.out.println("Saving entity: " + entity.toString());
         try {
             tx.begin();
             em.persist(entity);
