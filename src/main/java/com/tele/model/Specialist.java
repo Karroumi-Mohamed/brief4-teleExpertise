@@ -26,6 +26,7 @@ public class Specialist extends User {
     private List<ExpertiseRequest> receivedRequests = new ArrayList<>();
 
 
+
     public Specialist() {
         super();
         setRole(UserRole.SPECIALIST);
@@ -88,4 +89,5 @@ public class Specialist extends User {
         receivedRequests.remove(request);
         request.setSpecialist(null);
     }
+
 }

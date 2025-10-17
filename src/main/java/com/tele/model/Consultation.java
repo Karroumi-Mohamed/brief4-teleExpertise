@@ -34,6 +34,10 @@ public class Consultation {
     @Column(name = "consultation_date", nullable = false)
     private LocalDateTime consultationDate;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "timeslot_id")
+    private TimeSlot timeSlot;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 50)
     private ConsultationStatus status;
@@ -211,5 +215,13 @@ public class Consultation {
         }
 
         return total;
+    }
+
+    public TimeSlot getTimeSlot() {
+        return timeSlot;
+    }
+
+    public void setTimeSlot(TimeSlot timeSlot) {
+        this.timeSlot = timeSlot;
     }
 }

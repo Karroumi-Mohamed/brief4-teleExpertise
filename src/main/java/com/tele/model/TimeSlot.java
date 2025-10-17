@@ -18,6 +18,13 @@ public class TimeSlot {
     private DaySlot daySlot;
     private LocalDate date;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "specialist_id")
+    private Specialist specialist;
+
+    @OneToOne(mappedBy = "timeSlot", fetch = FetchType.LAZY)
+    private Consultation consultation;
+
     public TimeSlot() {
     }
 
@@ -48,5 +55,25 @@ public class TimeSlot {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Specialist getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
+    }
+
+    public Consultation getConsultation() {
+        return consultation;
+    }
+
+    public void setConsultation(Consultation consultation) {
+        this.consultation = consultation;
+    }
+
+    public boolean isAvailable() {
+        return consultation == null;
     }
 }
