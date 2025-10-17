@@ -1,0 +1,16 @@
+package com.tele.model.enums;
+
+public enum Specialty {
+    CARDIOLOGY,
+    PULMONOLOGY,
+    DERMATOLOGY,
+    NEUROLOGY,
+    ENDOCRINOLOGY,
+    ORTHOPEDICS,
+    OPHTHALMOLOGY,
+    GASTROENTEROLOGY,
+    PSYCHIATRY,
+    PEDIATRICS,
+    ONCOLOGY,
+    UROLOGY
+}
