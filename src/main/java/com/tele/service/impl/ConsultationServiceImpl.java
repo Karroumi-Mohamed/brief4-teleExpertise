@@ -93,8 +93,12 @@ public class ConsultationServiceImpl implements ConsultationService {
             consultation.setTreatment(treatment.trim());
         }
 
-        Consultation updatedConsultation = consultationDAO.update(consultation);
-        return DTOMapper.toDTO(updatedConsultation);
+        consultationDAO.update(consultation);
+
+        // Reload to avoid lazy initialization exception
+        Optional<Consultation> reloadedOpt = consultationDAO.findById(consultationId);
+        return reloadedOpt.map(DTOMapper::toDTO)
+                .orElseThrow(() -> new RuntimeException("Failed to reload consultation"));
     }
 
     @Override
@@ -184,9 +188,12 @@ public class ConsultationServiceImpl implements ConsultationService {
 
         Consultation consultation = consultationOpt.get();
         consultation.setStatus(ConsultationStatus.AWAITING_SPECIALIST_ADVICE);
-        Consultation updatedConsultation = consultationDAO.update(consultation);
+        consultationDAO.update(consultation);
 
-        return DTOMapper.toDTO(updatedConsultation);
+        // Reload to avoid lazy initialization exception
+        Optional<Consultation> reloadedOpt = consultationDAO.findById(consultationId);
+        return reloadedOpt.map(DTOMapper::toDTO)
+                .orElseThrow(() -> new RuntimeException("Failed to reload consultation"));
     }
 
     @Override

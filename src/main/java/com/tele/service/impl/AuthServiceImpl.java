@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class AuthServiceImpl implements AuthService {
-    private final static String USER_ID = "user_id";
+    public final static String USER_ID = "user_id";
     private final UserService userService;
 
     public AuthServiceImpl(UserService userService){

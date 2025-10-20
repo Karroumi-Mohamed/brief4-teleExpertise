@@ -1,17 +1,24 @@
 package com.tele.service;
 
-import com.tele.model.QueueEntry;
+import com.tele.dto.QueueEntryDTO;
 import com.tele.model.enums.QueueStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface QueueService {
 
-    QueueEntry addPatientToQueue(Long patientId);
+    QueueEntryDTO addPatientToQueue(Long patientId);
 
     void removeFromQueue(Long queueEntryId);
 
-    List<QueueEntry> getQueue();
+    void updateQueueEntryStatus(Long queueEntryId, QueueStatus status);
 
-    List<QueueEntry> getQueueByStatus(QueueStatus status);
+    Optional<QueueEntryDTO> getQueueEntryById(Long queueEntryId);
+
+    Optional<QueueEntryDTO> getActiveQueueEntryByPatientId(Long patientId);
+
+    List<QueueEntryDTO> getQueue();
+
+    List<QueueEntryDTO> getQueueByStatus(QueueStatus status);
 }

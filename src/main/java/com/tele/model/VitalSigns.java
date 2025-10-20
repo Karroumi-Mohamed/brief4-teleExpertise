@@ -8,7 +8,7 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class VitalSigns {
 
-    @Column(name = "blood_pressure", length = 7)
+    @Column(name = "blood_pressure", length = 20)
     private String bloodPressure;// bhal 120/80
 
     @Column(name = "heart_rate")

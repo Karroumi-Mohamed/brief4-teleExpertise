@@ -11,6 +11,9 @@ public class PatientDTO {
     private String socialSecurityNumber;
     private String phone;
     private String address;
+    private String mutuelle;
+    private String allergies;
+    private String currentTreatments;
     private LocalDateTime createdAt;
     private VitalSignsDTO vitalSigns;
 
@@ -19,6 +22,7 @@ public class PatientDTO {
 
     public PatientDTO(Long id, String fname, String lname, LocalDate birthDate,
                      String socialSecurityNumber, String phone, String address,
+                     String mutuelle, String allergies, String currentTreatments,
                      LocalDateTime createdAt, VitalSignsDTO vitalSigns) {
         this.id = id;
         this.fname = fname;
@@ -27,6 +31,9 @@ public class PatientDTO {
         this.socialSecurityNumber = socialSecurityNumber;
         this.phone = phone;
         this.address = address;
+        this.mutuelle = mutuelle;
+        this.allergies = allergies;
+        this.currentTreatments = currentTreatments;
         this.createdAt = createdAt;
         this.vitalSigns = vitalSigns;
     }
@@ -101,6 +108,30 @@ public class PatientDTO {
 
     public void setVitalSigns(VitalSignsDTO vitalSigns) {
         this.vitalSigns = vitalSigns;
+    }
+
+    public String getMutuelle() {
+        return mutuelle;
+    }
+
+    public void setMutuelle(String mutuelle) {
+        this.mutuelle = mutuelle;
+    }
+
+    public String getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(String allergies) {
+        this.allergies = allergies;
+    }
+
+    public String getCurrentTreatments() {
+        return currentTreatments;
+    }
+
+    public void setCurrentTreatments(String currentTreatments) {
+        this.currentTreatments = currentTreatments;
     }
 
     public String getFullName() {

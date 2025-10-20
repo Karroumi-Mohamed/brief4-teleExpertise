@@ -2,6 +2,8 @@ package com.tele.service.impl;
 
 import com.tele.dao.TimeSlotDAO;
 import com.tele.dao.SpecialistDAO;
+import com.tele.dao.impl.SpecialistDAOImpl;
+import com.tele.dao.impl.TimeSlotDAOImpl;
 import com.tele.dto.TimeSlotDTO;
 import com.tele.model.Specialist;
 import com.tele.model.TimeSlot;
@@ -20,6 +22,11 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
     private final TimeSlotDAO timeSlotDAO;
     private final SpecialistDAO specialistDAO;
+
+    public TimeSlotServiceImpl(){
+        timeSlotDAO = new TimeSlotDAOImpl();
+        specialistDAO = new SpecialistDAOImpl();
+    }
 
     public TimeSlotServiceImpl(TimeSlotDAO timeSlotDAO, SpecialistDAO specialistDAO) {
         this.timeSlotDAO = timeSlotDAO;

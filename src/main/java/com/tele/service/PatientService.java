@@ -11,9 +11,13 @@ public interface PatientService {
 
     PatientDTO createPatient(String fname, String lname, LocalDate birthDate,
                            String socialSecurityNumber, String phone, String address,
+                           String mutuelle, String allergies, String currentTreatments,
                            VitalSignsDTO vitalSigns);
 
     PatientDTO updateVitalSigns(Long patientId, VitalSignsDTO vitalSigns);
+
+    PatientDTO updatePatientInfo(Long patientId, String phone, String address,
+                                String mutuelle, String allergies, String currentTreatments);
 
     Optional<PatientDTO> findBySocialSecurityNumber(String ssn);
 

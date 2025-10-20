@@ -1,4 +1,4 @@
-package com.tele.servlet;
+package com.tele.servlet.auth;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -69,24 +69,9 @@ public class LoginServlet extends HttpServlet {
     }
 
 
-    private void redirectToDashboard(HttpServletRequest request, HttpServletResponse response, User user) throws IOException, ServletException {
-        switch (user.getRole()) {
-            case ADMIN:
-                response.sendRedirect(request.getContextPath() + "/admin/dashboard");
-                break;
-            case NURSE:
-                response.sendRedirect(request.getContextPath() + "/nurse/dashboard");
-                break;
-            case GENERAL_PRACTITIONER:
-                response.sendRedirect(request.getContextPath() + "/gp/dashboard");
-                break;
-            case SPECIALIST:
-                response.sendRedirect(request.getContextPath() + "/specialist/dashboard");
-                break;
-            default:
-                request.setAttribute("error", "Unknown user role");
-                request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-        }
+    private void redirectToDashboard(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
+        // Redirect to home - HomeServlet will handle role-based routing
+        response.sendRedirect(request.getContextPath() + "/");
     }
 
     @Override

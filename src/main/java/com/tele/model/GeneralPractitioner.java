@@ -32,6 +32,11 @@ public class GeneralPractitioner extends User {
         this.consultationFee = 150.0;
     }
 
+    public GeneralPractitioner(String email, String passwordHash, String firstName, String lastName, String phone) {
+        super(email, passwordHash, firstName, lastName, phone, UserRole.GENERAL_PRACTITIONER);
+        this.consultationFee = 150.0;
+    }
+
 
     public Double getConsultationFee() {
         return consultationFee;

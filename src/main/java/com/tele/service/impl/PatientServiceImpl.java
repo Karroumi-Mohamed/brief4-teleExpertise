@@ -29,10 +29,14 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientDTO createPatient(String fname, String lname, LocalDate birthDate,
                                   String socialSecurityNumber, String phone, String address,
+                                  String mutuelle, String allergies, String currentTreatments,
                                   VitalSignsDTO vitalSignsDTO) {
 
         VitalSigns vitalSigns = DTOMapper.toEntity(vitalSignsDTO);
         Patient patient = new Patient(fname, lname, birthDate, socialSecurityNumber, phone, address);
+        patient.setMutuelle(mutuelle);
+        patient.setAllergies(allergies);
+        patient.setCurrentTreatments(currentTreatments);
         patient.setVitalSigns(vitalSigns);
 
         Patient savedPatient = patientDAO.save(patient);
@@ -49,6 +53,25 @@ public class PatientServiceImpl implements PatientService {
         Patient patient = patientOpt.get();
         VitalSigns vitalSigns = DTOMapper.toEntity(vitalSignsDTO);
         patient.setVitalSigns(vitalSigns);
+
+        Patient updatedPatient = patientDAO.update(patient);
+        return DTOMapper.toDTO(updatedPatient);
+    }
+
+    @Override
+    public PatientDTO updatePatientInfo(Long patientId, String phone, String address,
+                                       String mutuelle, String allergies, String currentTreatments) {
+        Optional<Patient> patientOpt = patientDAO.findById(patientId);
+        if (!patientOpt.isPresent()) {
+            return null;
+        }
+
+        Patient patient = patientOpt.get();
+        patient.setPhone(phone);
+        patient.setAddress(address);
+        patient.setMutuelle(mutuelle);
+        patient.setAllergies(allergies);
+        patient.setCurrentTreatments(currentTreatments);
 
         Patient updatedPatient = patientDAO.update(patient);
         return DTOMapper.toDTO(updatedPatient);

@@ -2,14 +2,10 @@ package com.tele.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "patients")
@@ -33,14 +29,26 @@ public class Patient {
     @Column(name = "phone", nullable = false, length = 15)
     private String phone;
 
-    @Column(name = "address", nullable = false, length = 100)
+    @Column(name = "address", length = 100)
     private String address;
+
+    @Column(name = "mutuelle", length = 100)
+    private String mutuelle;
+
+    @Column(name = "allergies", columnDefinition = "TEXT")
+    private String allergies;
+
+    @Column(name = "current_treatments", columnDefinition = "TEXT")
+    private String currentTreatments;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Embedded
     private VitalSigns vitalSigns;
+
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+    private List<Consultation> consultations = new ArrayList<>();
 
     public Patient() {
         createdAt = LocalDateTime.now();
@@ -127,5 +135,37 @@ public class Patient {
 
     public void setVitalSigns(VitalSigns vitalSigns) {
         this.vitalSigns = vitalSigns;
+    }
+
+    public String getMutuelle() {
+        return mutuelle;
+    }
+
+    public void setMutuelle(String mutuelle) {
+        this.mutuelle = mutuelle;
+    }
+
+    public String getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(String allergies) {
+        this.allergies = allergies;
+    }
+
+    public String getCurrentTreatments() {
+        return currentTreatments;
+    }
+
+    public void setCurrentTreatments(String currentTreatments) {
+        this.currentTreatments = currentTreatments;
+    }
+
+    public List<Consultation> getConsultations() {
+        return consultations;
+    }
+
+    public void setConsultations(List<Consultation> consultations) {
+        this.consultations = consultations;
     }
 }

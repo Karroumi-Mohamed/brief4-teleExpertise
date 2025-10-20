@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="com.tele.model.User" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -163,12 +163,9 @@
                 <h1>TeleExpertise</h1>
             </div>
             <div class="user-info">
-                <%
-                    User user = (User) request.getAttribute("user");
-                    if (user != null) {
-                %>
-                    Logged in as <%= user.getFname() %> <%= user.getLname() %>
-                <% } %>
+                <c:if test="${not empty user}">
+                    Logged in as <c:out value="${user.fname}" /> <c:out value="${user.lname}" />
+                </c:if>
             </div>
         </div>
     </div>
@@ -182,42 +179,42 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">Total Users</div>
-                <div class="stat-value"><%= request.getAttribute("totalUsers") %></div>
+                <div class="stat-value">${totalUsers}</div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-label">Total Patients</div>
-                <div class="stat-value"><%= request.getAttribute("totalPatients") %></div>
+                <div class="stat-value">${requestScope.totalPatients}</div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-label">Consultations</div>
-                <div class="stat-value"><%= request.getAttribute("totalConsultations") %></div>
+                <div class="stat-value">${totalConsultations}</div>
             </div>
         </div>
 
         <div class="actions">
             <h3>Quick Actions</h3>
             <div class="action-list">
-                <a href="<%= request.getContextPath() %>/admin/users" class="action-item">
-                    <span class="action-title">Manage Users</span>
+                <a href="${pageContext.request.contextPath}/admin/nurses" class="action-item">
+                    <span class="action-title">Manage Nurses</span>
                     <span class="action-arrow">→</span>
                 </a>
-                <a href="<%= request.getContextPath() %>/admin/specialists" class="action-item">
+                <a href="${pageContext.request.contextPath}/admin/generalists" class="action-item">
+                    <span class="action-title">Manage Generalists</span>
+                    <span class="action-arrow">→</span>
+                </a>
+                <a href="${pageContext.request.contextPath}/admin/specialists" class="action-item">
                     <span class="action-title">Manage Specialists</span>
                     <span class="action-arrow">→</span>
                 </a>
-                <a href="<%= request.getContextPath() %>/admin/patients" class="action-item">
-                    <span class="action-title">View Patients</span>
-                    <span class="action-arrow">→</span>
-                </a>
-                <a href="<%= request.getContextPath() %>/admin/consultations" class="action-item">
+                <a href="${pageContext.request.contextPath}/admin/consultations" class="action-item">
                     <span class="action-title">View Consultations</span>
                     <span class="action-arrow">→</span>
                 </a>
             </div>
 
-            <a href="<%= request.getContextPath() %>/logout" class="logout-btn">Sign Out</a>
+            <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Sign Out</a>
         </div>
     </div>
 </body>

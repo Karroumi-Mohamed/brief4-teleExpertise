@@ -21,6 +21,9 @@ public class DTOMapper {
                 patient.getSocialSecurityNumber(),
                 patient.getPhone(),
                 patient.getAddress(),
+                patient.getMutuelle(),
+                patient.getAllergies(),
+                patient.getCurrentTreatments(),
                 patient.getCreatedAt(),
                 vitalSignsDTO);
     }
@@ -82,6 +85,31 @@ public class DTOMapper {
                 specialist.getAvgConsultationDuration());
     }
 
+    public static NurseDTO toDTO(Nurse nurse) {
+        if (nurse == null)
+            return null;
+
+        return new NurseDTO(
+                nurse.getId(),
+                nurse.getEmail(),
+                nurse.getFname(),
+                nurse.getLname(),
+                nurse.getPhone());
+    }
+
+    public static GeneralPractitionerDTO toDTO(GeneralPractitioner gp) {
+        if (gp == null)
+            return null;
+
+        return new GeneralPractitionerDTO(
+                gp.getId(),
+                gp.getEmail(),
+                gp.getFname(),
+                gp.getLname(),
+                gp.getPhone(),
+                gp.getConsultationFee());
+    }
+
     public static ConsultationDTO toDTO(Consultation consultation) {
         if (consultation == null)
             return null;
@@ -113,6 +141,15 @@ public class DTOMapper {
         if (expertiseRequest == null)
             return null;
 
+        // Get patient info from consultation
+        Long patientId = null;
+        String patientName = null;
+        if (expertiseRequest.getConsultation() != null && expertiseRequest.getConsultation().getPatient() != null) {
+            Patient patient = expertiseRequest.getConsultation().getPatient();
+            patientId = patient.getId();
+            patientName = patient.getFname() + " " + patient.getLname();
+        }
+
         return new ExpertiseRequestDTO(
                 expertiseRequest.getId(),
                 expertiseRequest.getQuestion(),
@@ -131,6 +168,24 @@ public class DTOMapper {
                 expertiseRequest.getSpecialist() != null ? expertiseRequest.getSpecialist().getFname() + " "
                         + expertiseRequest.getSpecialist().getLname() : null,
                 expertiseRequest.getSpecialist() != null ? expertiseRequest.getSpecialist().getSpecialty().toString()
-                        : null);
+                        : null,
+                patientId,
+                patientName);
+    }
+
+    public static QueueEntryDTO toDTO(QueueEntry queueEntry) {
+        if (queueEntry == null)
+            return null;
+
+        String patientName = queueEntry.getPatient() != null
+                ? queueEntry.getPatient().getFname() + " " + queueEntry.getPatient().getLname()
+                : null;
+
+        return new QueueEntryDTO(
+                queueEntry.getId(),
+                queueEntry.getPatient() != null ? queueEntry.getPatient().getId() : null,
+                patientName,
+                queueEntry.getArrivalTime(),
+                queueEntry.getStatus());
     }
 }

@@ -16,5 +16,5 @@ public interface ExpertiseRequestDAO extends GenericDAO<ExpertiseRequest, Long> 
 
     List<ExpertiseRequest> findBySpecialistIdAndStatus(Long specialistId, ExpertiseStatus status);
 
-    List<ExpertiseRequest> findByRequestingDoctorId(Long doctorId);
+    List<ExpertiseRequest> findByGPId(Long gpId);
 }

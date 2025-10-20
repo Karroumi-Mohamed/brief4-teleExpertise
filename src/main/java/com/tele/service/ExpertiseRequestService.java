@@ -20,6 +20,8 @@ public interface ExpertiseRequestService {
 
     List<ExpertiseRequestDTO> findBySpecialistFilteredByPriority(Long specialistId, Priority priority);
 
+    List<ExpertiseRequestDTO> findByGP(Long gpId);
+
     List<ExpertiseRequestDTO> findBySpecialist(Long specialistId);
 
     Optional<ExpertiseRequestDTO> findById(Long requestId);

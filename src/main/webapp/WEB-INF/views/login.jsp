@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -124,14 +125,11 @@
             <p>Medical Consultation Platform</p>
         </div>
 
-        <%
-            String error = (String) request.getAttribute("error");
-            if (error != null && !error.trim().isEmpty()) {
-        %>
+        <c:if test="${not empty sessionScope.error}">
             <div class="error-message">
-                <%= error %>
+                <c:out value="${sessionScope.error}" />
             </div>
-        <% } %>
+        </c:if>
 
         <form method="post" action="${pageContext.request.contextPath}/login">
             <div class="form-field">

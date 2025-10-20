@@ -72,16 +72,16 @@ public class ExpertiseRequestDAOImpl extends GenericDAOImpl<ExpertiseRequest, Lo
     }
 
     @Override
-    public List<ExpertiseRequest> findByRequestingDoctorId(Long doctorId) {
+    public List<ExpertiseRequest> findByGPId(Long gpId) {
         EntityManager em = getEntityManager();
         try {
             return em.createQuery(
-                "SELECT e FROM ExpertiseRequest e WHERE e.requestingDoctor.id = :doctorId ORDER BY e.createdAt DESC",
+                "SELECT e FROM ExpertiseRequest e WHERE e.requestingDoctor.id = :gpId ORDER BY e.createdAt DESC",
                 ExpertiseRequest.class)
-                .setParameter("doctorId", doctorId)
+                .setParameter("gpId", gpId)
                 .getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Error finding expertise requests by requesting doctor ID", e);
+            throw new RuntimeException("Error finding expertise requests by GP ID", e);
         }
     }
 }

@@ -21,6 +21,8 @@ public class ExpertiseRequestDTO {
     private Long specialistId;
     private String specialistName;
     private String specialistSpecialty;
+    private Long patientId;
+    private String patientName;
 
     public ExpertiseRequestDTO() {
     }
@@ -30,7 +32,8 @@ public class ExpertiseRequestDTO {
                               LocalDateTime createdAt, LocalDateTime respondedAt,
                               Long consultationId, Long requestingDoctorId,
                               String requestingDoctorName, Long specialistId,
-                              String specialistName, String specialistSpecialty) {
+                              String specialistName, String specialistSpecialty,
+                              Long patientId, String patientName) {
         this.id = id;
         this.question = question;
         this.medicalData = medicalData;
@@ -46,6 +49,8 @@ public class ExpertiseRequestDTO {
         this.specialistId = specialistId;
         this.specialistName = specialistName;
         this.specialistSpecialty = specialistSpecialty;
+        this.patientId = patientId;
+        this.patientName = patientName;
     }
 
     public Long getId() {
@@ -166,5 +171,21 @@ public class ExpertiseRequestDTO {
 
     public void setSpecialistSpecialty(String specialistSpecialty) {
         this.specialistSpecialty = specialistSpecialty;
+    }
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
  }

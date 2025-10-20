@@ -16,9 +16,15 @@ public class QueueDAOImpl extends GenericDAOImpl<QueueEntry, Long> implements Qu
     public List<QueueEntry> findByStatus(QueueStatus status) {
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT q FROM QueueEntry q WHERE q.status = :status", QueueEntry.class).setParameter("status", status).getResultList();
+            return em.createQuery(
+                "SELECT q FROM QueueEntry q JOIN FETCH q.patient WHERE q.status = :status ORDER BY q.arrivalTime ASC",
+                QueueEntry.class)
+                .setParameter("status", status)
+                .getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Error finding queue entries by status", e);
+        } finally {
+            em.close();
         }
     }
 }
